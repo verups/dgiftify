@@ -241,10 +241,14 @@ const RegistrationForm = props => {
               </div>
               <div className="signin-container">
                 <div className="content">
-                  <span className="signin-label">Back to </span>
+                  <span className="signin-label">
+                    Already have an account?{' '}
+                  </span>
                   <span
                     className="signin-link"
-                    onClick={() => history.push('/register')}
+                    onClick={() => {
+                      history.push('/login');
+                    }}
                   >
                     Sign in
                   </span>
