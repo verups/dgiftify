@@ -12,6 +12,7 @@ import { AppIntlProvider, AuthProvider } from '../Common/Contexts';
 
 const Home = lazy(() => import('./pages/home'));
 const Login = lazy(() => import('./pages/login'));
+const Register = lazy(() => import('./pages/register'));
 
 const NotFoundPage = () => <div>Not Found</div>;
 const RedirectToHome = () => <Redirect noThrow to="/" />;
@@ -50,6 +51,7 @@ function App() {
               <ThemeProvider theme={theme}>
                 <Switch>
                   <Route path="/" exact={true} component={Home} />
+                  <Route path="/register" component={Register} />
                   <Route
                     path="/login"
                     render={() => (

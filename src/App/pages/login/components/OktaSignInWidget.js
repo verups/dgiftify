@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useCallback,
-  useState,
-  Fragment
-} from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import { useHistory } from 'react-router-dom';
@@ -13,18 +6,14 @@ import { useIsMounted } from '../../../../Common/Hooks';
 
 const OktaSignInWidget = props => {
   let history = useHistory();
-  // const [widget, setWidget] = useState(null);
-  // const widgetRef = useRef(widget);
-
   const isMounted = useIsMounted();
 
-  let widget = null;
-  let fragmentRef = useRef(null);
+  let widgetRef = useRef(null);
+  let elementRef = useRef(null);
 
   useEffect(() => {
-    const el = fragmentRef.current;
-
-    widget = new OktaSignIn({
+    const el = elementRef.current;
+    widgetRef.current = new OktaSignIn({
       baseUrl: props.baseUrl,
       logo: '',
       features: {
@@ -42,20 +31,18 @@ const OktaSignInWidget = props => {
         }
       }
     });
-    widget.renderEl({ el }, props.onSuccess, props.onError);
-
-    // setWidget(widgetLogin);
-  }, [props.baseUrl, history, widget]);
+    widgetRef.current.renderEl({ el }, props.onSuccess, props.onError);
+  }, [props.baseUrl, history, widgetRef, props.onError, props.onSuccess]);
 
   useEffect(() => {
-    if (isMounted && widget) {
+    if (isMounted && widgetRef) {
       return () => {
-        widget.remove();
+        widgetRef.current.remove();
       };
     }
-  }, [widget, isMounted]);
+  }, [widgetRef, isMounted]);
 
-  return <div ref={fragmentRef}>{props.children}</div>;
+  return <div ref={elementRef}>{props.children}</div>;
 };
 
 export default OktaSignInWidget;
