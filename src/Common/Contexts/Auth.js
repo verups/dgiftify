@@ -3,8 +3,8 @@ import React, { createContext, useReducer } from 'react';
 export const AuthContext = createContext();
 
 export const initialState = {
-  authToken: 'fdd',
-  isAuthenticated: true,
+  authToken: null,
+  isAuthenticated: false,
   userName: 'Aia'
 };
 
@@ -23,6 +23,17 @@ const reducer = (state, action) => {
         ...state,
         authToken: null,
         isAuthenticated: false
+      };
+    case 'ONERROR':
+      return {
+        ...state,
+        authToken: null,
+        isAuthenticated: false
+      };
+    case 'UPDATE_USER_STATE':
+      return {
+        ...state,
+        isAuthenticated: payload
       };
     default:
       return state;
